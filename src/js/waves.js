@@ -12,6 +12,7 @@
 
     var Waves = Waves || {};
     var $$ = document.querySelectorAll.bind(document);
+    var classPrefix = 'urloom-';
 
     // Find exact position of element
     function isWindow(obj) {
@@ -75,7 +76,7 @@
             var relativeY   = (e.pageY - pos.top);
             var relativeX   = (e.pageX - pos.left);
             var scale       = 'scale('+((el.clientWidth / 100) * 3)+')';
-            
+
             // Support for touch devices
             if ('touches' in e) {
               relativeY   = (e.touches[0].pageY - pos.top);
@@ -93,10 +94,10 @@
                 'top': relativeY+'px',
                 'left': relativeX+'px'
             };
-            
-            ripple.className = ripple.className + ' waves-notransition';
+
+            ripple.className = ripple.className + ' ' + classPrefix + 'waves-notransition';
             ripple.setAttribute('style', convertStyle(rippleStyle));
-            ripple.className = ripple.className.replace('waves-notransition', '');
+            ripple.className = ripple.className.replace(classPrefix + 'waves-notransition', '');
 
             // Scale the ripple
             rippleStyle['-webkit-transform'] = scale;
@@ -119,10 +120,10 @@
 
             var el = this;
             var width = el.clientWidth * 1.4;
-            
+
             // Get first ripple
             var ripple = null;
-            var ripples = el.getElementsByClassName('waves-ripple');
+            var ripples = el.getElementsByClassName(classPrefix + 'waves-ripple');
             if (ripples.length > 0) {
                 ripple = ripples[ripples.length - 1];
             } else {
@@ -176,18 +177,18 @@
         wrapInput: function(elements) {
             for (var a = 0; a < elements.length; a++) {
                 var el = elements[a];
-                
+
                 if (el.tagName.toLowerCase() === 'input') {
                     var parent = el.parentNode;
 
                     // If input already have parent just pass through
-                    if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('waves-effect') !== -1) {
+                    if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf(classPrefix + 'waves-effect') !== -1) {
                         continue;
                     }
 
                     // Put element class and style to the specified parent
                     var wrapper = document.createElement('i');
-                    wrapper.className = el.className + ' waves-input-wrapper';
+                    wrapper.className = el.className + ' ' + classPrefix + 'waves-input-wrapper';
 
                     var elementStyle = el.getAttribute('style');
 
@@ -196,8 +197,8 @@
                     }
 
                     wrapper.setAttribute('style', elementStyle);
-                    
-                    el.className = 'waves-button-input';
+
+                    el.className = classPrefix + 'waves-button-input';
                     el.removeAttribute('style');
 
                     // Put element as child
@@ -254,10 +255,10 @@
         var target = e.target || e.srcElement;
 
         while (target.parentElement !== null) {
-            if (!(target instanceof SVGElement) && target.className.indexOf('waves-effect') !== -1) {
+            if (!(target instanceof SVGElement) && target.className.indexOf(classPrefix + 'waves-effect') !== -1) {
                 element = target;
                 break;
-            } else if (target.classList.contains('waves-effect')) {
+            } else if (target.classList.contains(classPrefix + 'waves-effect')) {
                 element = target;
                 break;
             }
@@ -292,14 +293,14 @@
         if ('duration' in options) {
             Effect.duration = options.duration;
         }
-        
+
         //Wrap input inside <i> tag
         Effect.wrapInput($$('.waves-effect'));
-        
+
         if ('ontouchstart' in window) {
             document.body.addEventListener('touchstart', showEffect, false);
         }
-        
+
         document.body.addEventListener('mousedown', showEffect, false);
     };
 
