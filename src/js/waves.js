@@ -68,7 +68,7 @@
 
             // Create ripple
             var ripple = document.createElement('div');
-            ripple.className = 'waves-ripple';
+            ripple.className = classPrefix + 'waves-ripple';
             el.appendChild(ripple);
 
             // Get click coordinate and element witdh
@@ -295,7 +295,7 @@
         }
 
         //Wrap input inside <i> tag
-        Effect.wrapInput($$('.waves-effect'));
+        Effect.wrapInput($$('.' + classPrefix + 'waves-effect'));
 
         if ('ontouchstart' in window) {
             document.body.addEventListener('touchstart', showEffect, false);
